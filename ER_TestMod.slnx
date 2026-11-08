@@ -1,0 +1,7 @@
+<Solution>
+  <Configurations>
+    <Platform Name="x64" />
+    <Platform Name="x86" />
+  </Configurations>
+  <Project Path="ER_TestMod.vcxproj" Id="1ed5257a-d711-43ec-bc66-a517b7f3a253" />
+</Solution>

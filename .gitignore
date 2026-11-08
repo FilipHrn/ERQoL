@@ -1,3 +1,11 @@
+.vs/*
+backups/*
+x64/*
+ER_TestMod/x64/*
+log.txt
+resources/*
+*.vcxproj.user
+
 # Prerequisites
 *.d
 
