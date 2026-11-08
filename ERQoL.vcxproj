@@ -99,6 +99,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -137,6 +138,7 @@
       <LanguageStandard>stdcpp20</LanguageStandard>
       <AdditionalIncludeDirectories>$(ProjectDir)</AdditionalIncludeDirectories>
       <LanguageStandard_C>stdc17</LanguageStandard_C>
+      <RuntimeLibrary>MultiThreaded</RuntimeLibrary>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -150,6 +152,7 @@
     <ClCompile Include="core\config.c" />
     <ClCompile Include="core\log.c" />
     <ClCompile Include="core\mem.c" />
+    <ClCompile Include="core\path.c" />
     <ClCompile Include="features\runes.c" />
     <ClCompile Include="features\unlock.c" />
     <ClCompile Include="game\event_flag.c" />
@@ -163,6 +166,7 @@
     <ClInclude Include="core\config.h" />
     <ClInclude Include="core\log.h" />
     <ClInclude Include="core\mem.h" />
+    <ClInclude Include="core\path.h" />
     <ClInclude Include="features\runes.h" />
     <ClInclude Include="features\unlock.h" />
     <ClInclude Include="game\event_flag.h" />

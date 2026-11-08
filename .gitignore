@@ -2,7 +2,7 @@
 backups/*
 x64/*
 ER_TestMod/x64/*
-log.txt
+mod_log.txt
 resources/*
 *.vcxproj.user
 

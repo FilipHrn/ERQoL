@@ -4,12 +4,33 @@
 #include <stdarg.h>
 
 #include "log.h"
+#include "path.h"
+
+#ifdef _DEBUG
+#define LOG_FILE "..\\..\\mod_log.txt"
+#else
+#define LOG_FILE "mod_log.txt"
+#endif
+
+static char log_path[MAX_PATH];
+
+void log_init(void* module) {
+    if (!path_next_to_module(module, LOG_FILE, log_path, sizeof(log_path))) {
+        log_path[0] = '\0';
+        return;
+    }
+
+    FILE* f = NULL;
+    if (fopen_s(&f, log_path, "w") == 0 && f != NULL) fclose(f);
+}
 
 void log_msg(const char* fmt, ...)
 {
+    if (log_path[0] == '\0') return;
+
     FILE* f = NULL;
-    if (fopen_s(&f, "C:\\dev\\practice\\C\\ER_TestMod\\ER_TestMod\\log.txt", "a") != 0 || f == NULL) {
-        return; // couldn't open the file, give up quietly
+    if (fopen_s(&f, log_path, "a") != 0 || f == NULL) {
+        return;
     }
 
     // Timestamp: [15:42:07]

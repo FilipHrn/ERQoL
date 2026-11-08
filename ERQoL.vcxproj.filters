@@ -22,6 +22,9 @@
     <ClCompile Include="core\mem.c">
       <Filter>core</Filter>
     </ClCompile>
+    <ClCompile Include="core\path.c">
+      <Filter>core</Filter>
+    </ClCompile>
     <ClCompile Include="features\runes.c">
       <Filter>features</Filter>
     </ClCompile>
@@ -52,6 +55,9 @@
       <Filter>core</Filter>
     </ClInclude>
     <ClInclude Include="core\mem.h">
+      <Filter>core</Filter>
+    </ClInclude>
+    <ClInclude Include="core\path.h">
       <Filter>core</Filter>
     </ClInclude>
     <ClInclude Include="features\runes.h">

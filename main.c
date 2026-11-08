@@ -7,8 +7,14 @@
 #include "features/runes.h"
 #include "core/config.h"
 
+#define MOD_VERSION "0.1.0"
+
 static DWORD WINAPI MainThread(LPVOID param) {
     HMODULE module = param;
+
+    log_init(module);
+
+    log_msg("Loading mod... Version: %s", MOD_VERSION);
     Config config = config_load(module);
 
     if (!game_init()) {
