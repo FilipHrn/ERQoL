@@ -147,6 +147,7 @@
     </Manifest>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="core\config.c" />
     <ClCompile Include="core\log.c" />
     <ClCompile Include="core\mem.c" />
     <ClCompile Include="features\runes.c" />
@@ -155,9 +156,11 @@
     <ClCompile Include="game\game.c" />
     <ClCompile Include="game\game_data.c" />
     <ClCompile Include="game\param.c" />
+    <ClCompile Include="game\world_chr.c" />
     <ClCompile Include="main.c" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="core\config.h" />
     <ClInclude Include="core\log.h" />
     <ClInclude Include="core\mem.h" />
     <ClInclude Include="features\runes.h" />
@@ -166,6 +169,12 @@
     <ClInclude Include="game\game.h" />
     <ClInclude Include="game\game_data.h" />
     <ClInclude Include="game\param.h" />
+    <ClInclude Include="game\world_chr.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <CopyFileToFolders Include="mod_config.INI">
+      <FileType>Document</FileType>
+    </CopyFileToFolders>
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
