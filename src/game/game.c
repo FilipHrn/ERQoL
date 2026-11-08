@@ -5,7 +5,7 @@
 #include "core/mem.h"
 #include "core/log.h"
 
-// Patterns from Hexinton CT v2.93, verified on 2.7.2.0 minus WORLDCHRMAN
+// Patterns from Hexinton CT v2.93, verified on 2.7.2.0
 #define AOB_EVENTFLAGMAN "48 8B 3D ?? ?? ?? ?? 48 85 FF ?? ?? 32 C0 E9"
 #define AOB_PARAM        "48 8B 0D ?? ?? ?? ?? 48 85 C9 0F 84 ?? ?? ?? ?? 45 33 C0 BA 8E 00 00 00"
 #define AOB_GAMEDATAMAN  "48 8B 05 ?? ?? ?? ?? 48 85 C0 74 05 48 8B 40 58 C3 C3"

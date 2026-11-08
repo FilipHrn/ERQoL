@@ -4,6 +4,7 @@
 #include "config.h"
 #include "log.h"
 #include "path.h"
+#include "mod.h"
 
 static bool read_bool(const char* path, const char* section, const char* key, bool fallback) {
 	char value[16];
@@ -19,7 +20,7 @@ Config config_load(void* module) {
 	Config config = { .auto_unlock = true };
 
 	char path[MAX_PATH];
-	if (!path_next_to_module(module, "mod_config.ini", path, sizeof(path))) {
+	if (!path_next_to_module(module, MOD_NAME "_config.ini", path, sizeof(path))) {
 		log_msg("config: could not build path");
 
 		return config;

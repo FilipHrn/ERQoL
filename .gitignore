@@ -1,9 +1,8 @@
 .vs/*
-backups/*
-x64/*
-ER_TestMod/x64/*
-mod_log.txt
-resources/*
+backups/
+build/
+*.log
+resources/
 *.vcxproj.user
 
 # Prerequisites

@@ -5,11 +5,12 @@
 
 #include "log.h"
 #include "path.h"
+#include "mod.h"
 
 #ifdef _DEBUG
-#define LOG_FILE "..\\..\\mod_log.txt"
+#define LOG_FILE "..\\..\\" MOD_NAME "_log.log"
 #else
-#define LOG_FILE "mod_log.txt"
+#define LOG_FILE MOD_NAME "_log.log"
 #endif
 
 static char log_path[MAX_PATH];

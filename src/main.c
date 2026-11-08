@@ -6,8 +6,7 @@
 #include "features/unlock.h"
 #include "features/runes.h"
 #include "core/config.h"
-
-#define MOD_VERSION "0.1.0"
+#include "core/mod.h"
 
 static DWORD WINAPI MainThread(LPVOID param) {
     HMODULE module = param;
