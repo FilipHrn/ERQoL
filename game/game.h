@@ -11,4 +11,4 @@ typedef struct {
 
 extern GameAddresses g_game;
 
-void game_init(void);
+int game_init(void);

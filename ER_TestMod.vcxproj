@@ -148,6 +148,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="core\log.c" />
+    <ClCompile Include="core\mem.c" />
     <ClCompile Include="features\runes.c" />
     <ClCompile Include="features\unlock.c" />
     <ClCompile Include="game\event_flag.c" />

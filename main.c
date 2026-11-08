@@ -9,7 +9,10 @@
 static DWORD WINAPI MainThread(LPVOID param) {
 	(void)param;
 
-    game_init();
+    if (!game_init()) {
+        log_msg("Addresses not found, mod disabled");
+        return 0;
+    }
 
     log_msg("Success! Mod loaded");
     log_msg("Module base: %p", (void*)g_game.base);

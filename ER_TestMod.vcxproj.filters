@@ -16,6 +16,9 @@
     <ClCompile Include="core\log.c">
       <Filter>core</Filter>
     </ClCompile>
+    <ClCompile Include="core\mem.c">
+      <Filter>core</Filter>
+    </ClCompile>
     <ClCompile Include="features\runes.c">
       <Filter>features</Filter>
     </ClCompile>
