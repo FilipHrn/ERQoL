@@ -11,6 +11,7 @@
 #define AOB_GAMEDATAMAN  "48 8B 05 ?? ?? ?? ?? 48 85 C0 74 05 48 8B 40 58 C3 C3"
 #define AOB_WORLDCHRMAN  "48 8B 05 ?? ?? ?? ?? 48 85 C0 74 0F 48 39 88"
 #define AOB_SETEVENTFLAG "48 89 5C 24 08 48 89 74 24 18 57 48 83 EC 30 48 8B DA 41 0F B6 F8 8B 12 48 8B F1 85 D2 0F 84 ?? ?? ?? ??"
+#define AOB_GETEVENTFLAG "44 8B 41 1C 44 8B DA 33 D2 41 8B C3" // Not from CT but, derived from SetEventFlag
 
 GameAddresses g_game;
 
@@ -41,10 +42,12 @@ int game_init(void) {
 	g_game.world_chr_man = find_static("WorldChrMan", AOB_WORLDCHRMAN);
 
 	g_game.set_event_flag = find_function("SetEventFlag", AOB_SETEVENTFLAG);
+	g_game.get_event_flag = find_function("GetEventFlag", AOB_GETEVENTFLAG);
 
 	return g_game.event_flag_man != 0
 		&& g_game.param_repo != 0
 		&& g_game.game_data_man != 0
 		&& g_game.world_chr_man != 0
-		&& g_game.set_event_flag != 0;
+		&& g_game.set_event_flag != 0
+		&& g_game.get_event_flag != 0;
 }
