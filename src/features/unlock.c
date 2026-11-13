@@ -7,6 +7,7 @@
 #include "game/event_flag.h"
 #include "game/world_chr.h"
 #include "game/grace.h"
+#include "game/boss.h"
 
 typedef bool (*SkipFn)(uint32_t id);
 typedef uint32_t(*FlagFn)(const void* row);
@@ -22,7 +23,11 @@ static uint32_t map_flag(const void* row) {
 }
 
 static bool skip_grace(uint32_t id) {
-	return id == GRACE_PLACEHOLDER || grace_is_boss(id) || grace_is_ashen_capital(id);
+	if (id == GRACE_PLACEHOLDER || grace_is_boss(id)) return true;
+
+	bool maliketh_defeated = boss_is_defeated(BOSS_MALIKETH);
+	
+	return maliketh_defeated ? grace_is_royal_capital(id) : grace_is_ashen_capital(id);
 }
 
 static int set_flags_from_param(int index, FlagFn get_flag, SkipFn skip) {
@@ -35,7 +40,9 @@ static int set_flags_from_param(int index, FlagFn get_flag, SkipFn skip) {
 		uint32_t flag_id = get_flag(param_row_data(table, i));
 
 		if (skip != NULL && skip(flag_id)) {
+		#ifdef _DEBUG
 			log_msg("skip flag %u", flag_id);
+		#endif
 			continue;
 		}
 
@@ -60,7 +67,7 @@ void unlock_on_load(void) {
 	bool in_world = wcm != NULL && wcm->main_player != NULL;
 
 	if (in_world && !was_in_world) {
-		log_msg("Save loaded, unlocking");
+		log_msg("World loaded, unlocking");
 		unlock_all();
 	}
 
