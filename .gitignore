@@ -4,6 +4,7 @@ build/
 *.log
 resources/
 *.vcxproj.user
+tdl.txt
 
 # Prerequisites
 *.d

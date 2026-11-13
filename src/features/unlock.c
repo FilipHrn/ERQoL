@@ -2,70 +2,67 @@
 #include <stdbool.h>
 
 #include "unlock.h"
+#include "core/log.h"
 #include "game/param.h"
 #include "game/event_flag.h"
-#include "core/log.h"
 #include "game/world_chr.h"
+#include "game/grace.h"
 
-typedef int (*SkipFn)(uint32_t id);
+typedef bool (*SkipFn)(uint32_t id);
 typedef uint32_t(*FlagFn)(const void* row);
 
 static uint32_t grace_flag(const void* row) {
-    const BonfireWarpData* grace = row;
-    return grace->event_flag_id;
+	const BonfireWarpData* grace = row;
+	return grace->event_flag_id;
 }
 
 static uint32_t map_flag(const void* row) {
-    const WorldMapPieceData* map = row;
-    return map->open_event_flag_id;
+	const WorldMapPieceData* map = row;
+	return map->open_event_flag_id;
 }
 
-static int skip_grace(uint32_t id) {
-	if (id == 200) return 1;                    // row 0: placeholder, not a grace
-	if (id >= 71120 && id <= 71125) return 1;   // Ashen Capital (only after the story burns it)
-	if (id == 71900) return 1;                  // Fractured Marika (final boss)
-
-	return 0;
+static bool skip_grace(uint32_t id) {
+	return id == GRACE_PLACEHOLDER || grace_is_boss(id) || grace_is_ashen_capital(id);
 }
 
 static int set_flags_from_param(int index, FlagFn get_flag, SkipFn skip) {
-    ParamTable* table = param_get_table(index);
-    if (table == NULL) { log_msg("param %d not ready", index); return 0; }
+	ParamTable* table = param_get_table(index);
+	if (table == NULL) { log_msg("param %d not ready", index); return 0; }
 
-    int count = 0;
+	int count = 0;
 
-    for (uint16_t i = 0; i < table->row_count; i++) {
-        uint32_t flag_id = get_flag(param_row_data(table, i));
+	for (uint16_t i = 0; i < table->row_count; i++) {
+		uint32_t flag_id = get_flag(param_row_data(table, i));
 
-        if (skip != NULL && skip(flag_id)) {
-            log_msg("skip flag %u", flag_id);
-            continue;
-        }
+		if (skip != NULL && skip(flag_id)) {
+			log_msg("skip flag %u", flag_id);
+			continue;
+		}
 
-        event_flag_set(flag_id);
-        count++;
-    }
+		event_flag_set(flag_id);
+		count++;
+	}
 
-    return count;
+	return count;
 }
 
 void unlock_all(void) {
-    int graces = set_flags_from_param(PARAM_BONFIRE, grace_flag, skip_grace);
-    int maps = set_flags_from_param(PARAM_MAPPIECE, map_flag, NULL);
+	int graces = set_flags_from_param(PARAM_BONFIRE, grace_flag, skip_grace);
+	int maps = set_flags_from_param(PARAM_MAPPIECE, map_flag, NULL);
 
-    log_msg("Graces set: %d, map pieces set: %d", graces, maps);
+	log_msg("Graces set: %d, map pieces set: %d", graces, maps);
 }
 
 void unlock_on_load(void) {
-    static bool was_in_world = false;
+	static bool was_in_world = false;
 
-    WorldChrMan* wcm = world_chr_man();
-    bool in_world = wcm != NULL && wcm->main_player != NULL;
+	WorldChrMan* wcm = world_chr_man();
+	bool in_world = wcm != NULL && wcm->main_player != NULL;
 
-    if (in_world && !was_in_world) {
-        log_msg("Save loaded, unlocking");
-        unlock_all();
-    }
+	if (in_world && !was_in_world) {
+		log_msg("Save loaded, unlocking");
+		unlock_all();
+	}
 
-    was_in_world = in_world;
+	was_in_world = in_world;
 }
