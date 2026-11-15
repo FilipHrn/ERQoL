@@ -5,7 +5,6 @@
 #include "core/log.h"
 #include "game/param.h"
 #include "game/event_flag.h"
-#include "game/world_chr.h"
 #include "game/grace.h"
 #include "game/boss.h"
 
@@ -58,18 +57,4 @@ void unlock_all(void) {
 	int maps = set_flags_from_param(PARAM_MAPPIECE, map_flag, NULL);
 
 	log_msg("Graces set: %d, map pieces set: %d", graces, maps);
-}
-
-void unlock_on_load(void) {
-	static bool was_in_world = false;
-
-	WorldChrMan* wcm = world_chr_man();
-	bool in_world = wcm != NULL && wcm->main_player != NULL;
-
-	if (in_world && !was_in_world) {
-		log_msg("World loaded, unlocking");
-		unlock_all();
-	}
-
-	was_in_world = in_world;
 }

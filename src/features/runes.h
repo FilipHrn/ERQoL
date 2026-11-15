@@ -1,3 +1,3 @@
 #pragma once
 
-void runes_add(int amount);
+void runes_give_start(int amount);

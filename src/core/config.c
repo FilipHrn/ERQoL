@@ -16,8 +16,16 @@ static bool read_bool(const char* path, const char* section, const char* key, bo
 	return fallback;
 }
 
+static int read_int(const char* path, const char* section, const char* key, int fallback) {
+	return (int)GetPrivateProfileIntA(section, key, fallback, path);
+}
+
 Config config_load(void* module) {
-	Config config = { .auto_unlock = true };
+	Config config = { 
+		.unlock = true,
+		.start_runes = true,
+		.start_runes_amount = 999999999,
+	};
 
 	char path[MAX_PATH];
 	if (!path_next_to_module(module, MOD_NAME "_config.ini", path, sizeof(path))) {
@@ -26,10 +34,20 @@ Config config_load(void* module) {
 		return config;
 	}
 
-	config.auto_unlock = read_bool(path, "general", "auto_unlock", config.auto_unlock);
+	config.unlock = read_bool(path, "general", "unlock", config.unlock);
+	config.start_runes = read_bool(path, "runes", "start_runes", config.start_runes);
+	config.start_runes_amount = read_int(path, "runes", "start_runes_amount", config.start_runes_amount);
+
+	if (config.start_runes_amount < 0) 
+		config.start_runes_amount = 0;
+
+	if (config.start_runes_amount > 999999999)
+		config.start_runes_amount = 999999999;
 
 	log_msg("config: %s", path);
-	log_msg("config: auto_unlock = %s", config.auto_unlock ? "true" : "false");
+	log_msg("config: unlock = %s", config.unlock ? "true" : "false");
+	log_msg("config: start_runes = %s", config.start_runes ? "true" : "false");
+	log_msg("config: start_runes_amount = %d", config.start_runes_amount);
 
 	return config;
 }

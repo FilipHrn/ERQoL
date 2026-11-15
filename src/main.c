@@ -3,6 +3,7 @@
 
 #include "core/log.h"
 #include "game/game.h"
+#include "game/world_chr.h"
 #include "features/unlock.h"
 #include "features/runes.h"
 #include "core/config.h"
@@ -24,21 +25,20 @@ static DWORD WINAPI MainThread(LPVOID param) {
     log_msg("Success! Mod loaded");
     log_msg("Module base: %p", (void*)g_game.base);
 
-    if (config.auto_unlock) {
-        while (1) {
-            unlock_on_load();
-            Sleep(500);
-        }
-    }
-
     while (1) {
-        if (GetAsyncKeyState(VK_F5) & 1) runes_add(10000);
+        if (world_just_loaded()) {
+            log_msg("World loaded");
 
-        if (GetAsyncKeyState(VK_F8) & 1) unlock_all();
+            if (config.unlock) 
+                unlock_all();
 
-        Sleep(50);
+            if (config.start_runes) 
+                runes_give_start(config.start_runes_amount);
+        }
+
+        Sleep(500);
     }
-
+    
     return 0;
 }
 
