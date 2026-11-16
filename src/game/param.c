@@ -27,3 +27,8 @@ const void* param_row_data(ParamTable* table, uint16_t index) {
     ParamRow* rows = param_rows(table);
     return (const uint8_t*)table + rows[index].data_offset;
 }
+
+void* param_row_data_mutable(ParamTable* table, uint16_t index) {
+    ParamRow* rows = param_rows(table);
+    return (uint8_t*)table + rows[index].data_offset;
+}

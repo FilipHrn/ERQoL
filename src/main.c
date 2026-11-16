@@ -2,12 +2,13 @@
 #include <Windows.h>
 
 #include "core/log.h"
+#include "core/config.h"
+#include "core/mod.h"
 #include "game/game.h"
 #include "game/world_chr.h"
 #include "features/unlock.h"
 #include "features/runes.h"
-#include "core/config.h"
-#include "core/mod.h"
+#include "features/warp.h"
 
 static DWORD WINAPI MainThread(LPVOID param) {
     HMODULE module = param;
@@ -34,6 +35,9 @@ static DWORD WINAPI MainThread(LPVOID param) {
 
             if (config.start_runes) 
                 runes_give_start(config.start_runes_amount);
+
+            if (config.dungeon_warp)
+                warp_unblock();
         }
 
         Sleep(500);

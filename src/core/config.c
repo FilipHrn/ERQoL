@@ -25,6 +25,7 @@ Config config_load(void* module) {
 		.unlock = true,
 		.start_runes = true,
 		.start_runes_amount = 999999999,
+		.dungeon_warp = true,
 	};
 
 	char path[MAX_PATH];
@@ -37,6 +38,7 @@ Config config_load(void* module) {
 	config.unlock = read_bool(path, "general", "unlock", config.unlock);
 	config.start_runes = read_bool(path, "runes", "start_runes", config.start_runes);
 	config.start_runes_amount = read_int(path, "runes", "start_runes_amount", config.start_runes_amount);
+	config.dungeon_warp = read_bool(path, "warp", "dungeon_warp", config.dungeon_warp);
 
 	if (config.start_runes_amount < 0) 
 		config.start_runes_amount = 0;
@@ -48,6 +50,7 @@ Config config_load(void* module) {
 	log_msg("config: unlock = %s", config.unlock ? "true" : "false");
 	log_msg("config: start_runes = %s", config.start_runes ? "true" : "false");
 	log_msg("config: start_runes_amount = %d", config.start_runes_amount);
+	log_msg("config: dungeon_warp = %s", config.dungeon_warp ? "true" : "false");
 
 	return config;
 }

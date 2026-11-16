@@ -18,7 +18,7 @@ GameAddresses g_game;
 static uintptr_t find_static(const char* name, const char* pattern) {
 	uintptr_t address = mem_resolve_rip(mem_scan(g_game.base, pattern), 3, 7);
 
-	if (address == 0) 
+	if (address == 0)
 		log_msg("AOB not found: %s", name);
 
 	return address;
@@ -27,7 +27,7 @@ static uintptr_t find_static(const char* name, const char* pattern) {
 static uintptr_t find_function(const char* name, const char* pattern) {
 	uintptr_t address = mem_scan(g_game.base, pattern);
 
-	if (address == 0) 
+	if (address == 0)
 		log_msg("AOB not found: %s", name);
 
 	return address;

@@ -4,6 +4,7 @@
 
 #define PARAM_BONFIRE 43 // BonfireWarpParam
 #define PARAM_MAPPIECE 88 // WorldMapPieceParam
+#define PARAM_MAPDEFAULTINFO 133 // MapDefaultInfoParam
 
 typedef struct {
 	uint32_t _flags; // +0x00
@@ -19,6 +20,11 @@ typedef struct {
 	float open_travel_area_bottom;        // +0x14
 	uint32_t acquisition_event_flag_id;   // +0x18
 } WorldMapPieceData;
+
+typedef struct {
+	uint32_t _flags; // +0x00
+	uint32_t enable_fast_travel_event_flag_id; // +0x04
+} MapDefaultInfoData;
 
 typedef struct {
 	uint32_t id;               // +0x00
@@ -53,7 +59,9 @@ typedef struct {
 	ParamEntry entries[];       // +0x88
 } ParamRepository;
 
+_Static_assert(offsetof(BonfireWarpData, event_flag_id) == 0x04, "event flag id must be at +0x04");
 _Static_assert(offsetof(WorldMapPieceData, acquisition_event_flag_id) == 0x18, "acquisition flag must be at +0x18");
+_Static_assert(offsetof(MapDefaultInfoData, enable_fast_travel_event_flag_id) == 0x04, "enable warping flag must be at +0x04");
 
 _Static_assert(sizeof(ParamRow) == 0x18, "ParamRow must be 0x18 bytes");
 _Static_assert(sizeof(ParamTable) == 0x40, "ParamTable header must be 0x40 bytes");
@@ -63,6 +71,7 @@ _Static_assert(sizeof(ParamEntry) == 0x48, "ParamEntry must be 0x48 bytes");
 _Static_assert(offsetof(ParamRepository, entries) == 0x88, "entries must start at +0x88");
 
 const void* param_row_data(ParamTable* table, uint16_t index);
+void* param_row_data_mutable(ParamTable* table, uint16_t index);
 
 ParamTable* param_get_table(int index);
 ParamRepository* param_repo(void);
